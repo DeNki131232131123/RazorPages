@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RazorPagesMovie.Data;
+using WebApplication2.Data;
 using WebApplication2.Models;
 
 namespace RazorPagesMovie.Models;
@@ -8,14 +8,16 @@ public static class SeedData
 {
     public static void Initialize(IServiceProvider serviceProvider)
     {
-        using (var context = new RazorPagesMovieContext(
+        using (var context = new WebApplication2Context(
             serviceProvider.GetRequiredService<
-                DbContextOptions<RazorPagesMovieContext>>()))
+                DbContextOptions<WebApplication2Context>>()))
         {
             if (context == null || context.Movie == null)
             {
                 throw new ArgumentNullException("Null RazorPagesMovieContext");
             }
+
+            context.Database.Migrate();
 
             // Look for any movies.
             if (context.Movie.Any())
